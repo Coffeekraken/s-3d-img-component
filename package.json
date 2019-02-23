@@ -1,0 +1,137 @@
+{
+  "name": "coffeekraken-s-3d-gl-effect-component",
+  "version": "1.0.0",
+  "description": "Create a freaking cool fake 3D effect on any image using WebGL and some magic from this [Codrops article](https://tympanus.net/codrops/2019/02/20/how-to-create-a-fake-3d-image-effect-with-webgl/)",
+  "main": "dist/index.js",
+  "homepage": "http://coffeekraken.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coffeekraken/s-3d-gl-effect-component"
+  },
+  "watch": {
+    "doc:js": {
+      "paths": "src/**/*.js"
+    },
+    "doc:css": {
+      "paths": "src/**/*.scss"
+    },
+    "demo:js": {
+      "paths": [
+        "demo/src/**/*.js",
+        "dist/js/**/*.js"
+      ]
+    },
+    "demo:css": {
+      "paths": "demo/src/**/*.scss"
+    }
+  },
+  "scripts": {
+    "dist": "npm run dist:js",
+    "dist:js": "babel src -d dist --watch",
+    "playground": "coffeekraken-code-playground",
+    "demo": "rm -rf demo/dist && npm run demo:js && npm run demo:css && run demo:server",
+    "demo:js": "webpack",
+    "demo:css": "node-sass demo/src/sass/style.scss demo/dist/css/style.css  --include-path node_modules --output-style expanded",
+    "demo:server": "http-server demo",
+    "doc": "rm -rf doc && npm run doc:js && npm run doc:css",
+    "doc:js": "coffeekraken-docblock-to-markdown -f 'src/**/*.js' -d doc --remove-path src/",
+    "doc:css": "coffeekraken-docblock-to-markdown -f 'src/**/*.scss' -d doc --remove-path src/",
+    "start": "coffeekraken-scripts-stack dist:js demo:server -i dist -i start -i demo",
+    "test": "jest",
+    "pretty-quick": "pretty-quick",
+    "pretty-quick-commit": "pretty-quick --staged > /dev/null 2>&1",
+    "node-version": "node -v > .node-version",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint 'src/**/*.js'",
+    "lint:css": "stylelint 'src/sass/**/*.scss'"
+  },
+  "pre-commit": [
+    "pretty-quick-commit",
+    "test",
+    "lint",
+    "node-version"
+  ],
+  "keywords": [
+    "3d",
+    "effect",
+    "image",
+    "webgl",
+    "webcomponent",
+    "component",
+    "html",
+    "sugar",
+    "coffee",
+    "kraken",
+    "coffeekraken"
+  ],
+  "author": "Coffeekraken <hello@coffeekraken.io>",
+  "contributors": [
+    {
+      "name": "Olivier Bossel",
+      "email": "olivier.bossel@gmail.com",
+      "url": "http://olivierbossel.com"
+    }
+  ],
+  "license": "MIT",
+  "jest": {
+    "roots": [
+      "tests"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "coffeekraken-sugar": "^1.0.71",
+    "gyronorm": "^2.0.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.3.3",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-bind": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.3.2",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/preset-env": "^7.3.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.0",
+    "coffeekraken-code-playground": "^1.0.19",
+    "coffeekraken-docblock-to-markdown": "^1.0.0",
+    "coffeekraken-s-button-component": "^1.0.3",
+    "coffeekraken-s-typography-component": "^1.0.2",
+    "coffeekraken-scripts-stack": "^1.0.3",
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "git-changelog": "^1.1.2",
+    "http-server": "^0.11.1",
+    "jest": "^23.6.0",
+    "node-sass": "^4.9.4",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.16.4",
+    "pretty-quick": "^1.10.0",
+    "regenerator-runtime": "^0.13.1",
+    "stylelint": "^9.10.1",
+    "stylelint-config-standard": "^18.2.0",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
+  }
+}

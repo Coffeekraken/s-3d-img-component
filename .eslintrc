@@ -1,0 +1,14 @@
+{
+  "extends": ["airbnb","prettier"],
+  "rules": {
+    "semi": ["error","never"],
+    "import/newline-after-import": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
+    "prefer-spread": "off"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}
