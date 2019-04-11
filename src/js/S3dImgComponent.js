@@ -39,14 +39,21 @@ export default class S3dImgComponent extends SWebComponent {
       depthSrc: null,
 
       /**
-       * Specify the vertical threshold. Less is more mean that the lower is the number, the gigher is the effect
+       * Set the size automatically depending on the source image size
+       * @prop
+       * @type    {Boolean}
+       */
+      autoSize: true,
+
+      /**
+       * Specify the vertical threshold. Less is more mean that the lower is the number, the higher is the effect
        * @prop
        * @type    {Number}
        */
       verticalThreshold: 15,
 
       /**
-       * Specify the horizontal threshold. Less is more mean that the lower is the number, the gigher is the effect
+       * Specify the horizontal threshold. Less is more mean that the lower is the number, the higher is the effect
        * @prop
        * @type    {Number}
        */
@@ -122,6 +129,28 @@ export default class S3dImgComponent extends SWebComponent {
    */
   componentMount() {
     super.componentMount()
+
+    // load the base image to get his size
+    const img = new Image()
+    img.onload = () => {
+      const imgRatio = img.height / img.width
+      if (this.props.autoSize) {
+        this.style.width = '100%'
+        this.style.height = `${this.offsetWidth * imgRatio}px`
+        window.addEventListener('resize', () => {
+          this.style.height = `${this.offsetWidth * imgRatio}px`
+        })
+      }
+
+      this._init()
+    }
+    img.src = this.props.src
+  }
+
+  /**
+   * Init
+   */
+  _init() {
     // create a canvas to work with
     this._$canvas = document.createElement('canvas')
     this._$canvas.width = '100%'
@@ -314,8 +343,6 @@ export default class S3dImgComponent extends SWebComponent {
    * Gyroscope
    */
   _gyro() {
-    this._maxTilt = 15
-
     const gn = new GyroNorm()
 
     gn.init({
@@ -327,9 +354,17 @@ export default class S3dImgComponent extends SWebComponent {
           const x = data.do.beta
 
           this._mouseTargetY =
-            clamp(x, -this._maxTilt, this._maxTilt) / this._maxTilt
+            clamp(
+              x,
+              -this.props.horizontalThreshold,
+              this.props.horizontalThreshold
+            ) / this.props.horizontalThreshold
           this._mouseTargetX =
-            -clamp(y, -this._maxTilt, this._maxTilt) / this._maxTilt
+            -clamp(
+              y,
+              -this.props.verticalThreshold,
+              this.props.verticalThreshold
+            ) / this.props.verticalThreshold
         })
       })
       .catch(() => {

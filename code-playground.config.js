@@ -20,7 +20,7 @@ module.exports = {
       language: 'html',
       data: `
         <div class="container">
-          <s-3d-img src="/demo/data/mount.jpg" depth-src="/demo/data/mount-map.jpg" vertical-threshold="15" horizontal-threshold="15"></s-3d-img>
+          <s-3d-img src="/demo/data/mount.jpg" depth-src="/demo/data/mount-map.jpg" auto-size="false" vertical-threshold="15" horizontal-threshold="15"></s-3d-img>
 
           <div class="metas">
             <h1 class="h1 m-b">
