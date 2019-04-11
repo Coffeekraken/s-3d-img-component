@@ -1,6 +1,6 @@
 {
   "name": "coffeekraken-s-3d-img-component",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create a freaking cool fake 3D effect on any image using WebGL and some magic from this [Codrops article](https://tympanus.net/codrops/2019/02/20/how-to-create-a-fake-3d-image-effect-with-webgl/)",
   "main": "dist/index.js",
   "homepage": "http://coffeekraken.io",

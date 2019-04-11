@@ -212,12 +212,40 @@ var S3dImgComponent =
         {
           key: 'componentMount',
           value: function componentMount() {
+            var _this = this
+
             _get(
               _getPrototypeOf(S3dImgComponent.prototype),
               'componentMount',
               this
-            ).call(this) // create a canvas to work with
+            ).call(this) // load the base image to get his size
 
+            var img = new Image()
+
+            img.onload = function() {
+              var imgRatio = img.height / img.width
+
+              if (_this.props.autoSize) {
+                _this.style.width = '100%'
+                _this.style.height = _this.offsetWidth * imgRatio + 'px'
+                window.addEventListener('resize', function(e) {
+                  _this.style.height = _this.offsetWidth * imgRatio + 'px'
+                })
+              }
+
+              _this._init()
+            }
+
+            img.src = this.props.src
+          }
+          /**
+           * Init
+           */
+        },
+        {
+          key: '_init',
+          value: function _init() {
+            // create a canvas to work with
             this._$canvas = document.createElement('canvas')
             this._$canvas.width = '100%'
             this._$canvas.height = '100%'
@@ -484,9 +512,8 @@ var S3dImgComponent =
         {
           key: '_gyro',
           value: function _gyro() {
-            var _this = this
+            var _this2 = this
 
-            this._maxTilt = 15
             var gn = new _gyronorm.default()
             gn.init({
               gravityNormalized: true
@@ -495,12 +522,18 @@ var S3dImgComponent =
                 gn.start(function(data) {
                   var y = data.do.gamma
                   var x = data.do.beta
-                  _this._mouseTargetY =
-                    (0, _clamp.default)(x, -_this._maxTilt, _this._maxTilt) /
-                    _this._maxTilt
-                  _this._mouseTargetX =
-                    -(0, _clamp.default)(y, -_this._maxTilt, _this._maxTilt) /
-                    _this._maxTilt
+                  _this2._mouseTargetY =
+                    (0, _clamp.default)(
+                      x,
+                      -_this2.props.horizontalThreshold,
+                      _this2.props.horizontalThreshold
+                    ) / _this2.props.horizontalThreshold
+                  _this2._mouseTargetX =
+                    -(0, _clamp.default)(
+                      y,
+                      -_this2.props.verticalThreshold,
+                      _this2.props.verticalThreshold
+                    ) / _this2.props.verticalThreshold
                 })
               })
               .catch(function() {
@@ -514,13 +547,13 @@ var S3dImgComponent =
         {
           key: '_mouseMove',
           value: function _mouseMove() {
-            var _this2 = this
+            var _this3 = this
 
             document.addEventListener('mousemove', function(e) {
-              var halfX = _this2._windowWidth / 2
-              var halfY = _this2._windowHeight / 2
-              _this2._mouseTargetX = (halfX - e.clientX) / halfX
-              _this2._mouseTargetY = (halfY - e.clientY) / halfY
+              var halfX = _this3._windowWidth / 2
+              var halfY = _this3._windowHeight / 2
+              _this3._mouseTargetX = (halfX - e.clientX) / halfX
+              _this3._mouseTargetY = (halfY - e.clientY) / halfY
             })
           }
           /**
@@ -587,14 +620,21 @@ var S3dImgComponent =
               depthSrc: null,
 
               /**
-               * Specify the vertical threshold. Less is more mean that the lower is the number, the gigher is the effect
+               * Set the size automatically depending on the source image size
+               * @prop
+               * @type    {Boolean}
+               */
+              autoSize: true,
+
+              /**
+               * Specify the vertical threshold. Less is more mean that the lower is the number, the higher is the effect
                * @prop
                * @type    {Number}
                */
               verticalThreshold: 15,
 
               /**
-               * Specify the horizontal threshold. Less is more mean that the lower is the number, the gigher is the effect
+               * Specify the horizontal threshold. Less is more mean that the lower is the number, the higher is the effect
                * @prop
                * @type    {Number}
                */

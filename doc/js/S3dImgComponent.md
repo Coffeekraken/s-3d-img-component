@@ -37,9 +37,17 @@ Type : **{ [String](https://developer.mozilla.org/fr/docs/Web/JavaScript/Referen
 
 Default : **null**
 
+### autoSize
+
+Set the size automatically depending on the source image size
+
+Type : **{ [Boolean](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Boolean) }**
+
+Default : **true**
+
 ### verticalThreshold
 
-Specify the vertical threshold. Less is more mean that the lower is the number, the gigher is the effect
+Specify the vertical threshold. Less is more mean that the lower is the number, the higher is the effect
 
 Type : **{ [Number](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Number) }**
 
@@ -47,7 +55,7 @@ Default : **15**
 
 ### horizontalThreshold
 
-Specify the horizontal threshold. Less is more mean that the lower is the number, the gigher is the effect
+Specify the horizontal threshold. Less is more mean that the lower is the number, the higher is the effect
 
 Type : **{ [Number](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Number) }**
 
